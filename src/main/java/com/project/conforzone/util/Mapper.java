@@ -2,19 +2,15 @@ package com.project.conforzone.util;
 
 import com.project.conforzone.model.*;
 import com.project.conforzone.model.dto.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-@AllArgsConstructor
-@NoArgsConstructor
 public class Mapper {
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     public UserModelDto toUserDTO(UserModel user){
         return modelMapper.map(user, UserModelDto.class);

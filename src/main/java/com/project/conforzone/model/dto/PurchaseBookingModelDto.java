@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor //Constructor con todos los argumentos
 public class PurchaseBookingModelDto {
     private Integer id;
+    private String transactionId;
     private Date datePurchase;
     private Integer totalPrice;
     private String address;

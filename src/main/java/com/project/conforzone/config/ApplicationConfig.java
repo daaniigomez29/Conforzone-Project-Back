@@ -20,20 +20,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
-    private UserRepository userRepository;
-
-    /*public ApplicationConfig(UserRepository userRepository){
-        this.userRepository = userRepository;
-    }
-
-     */
-
+    private final UserRepository userRepository;
     /**
      * Realiza configuracion inicial de authenticationManager
      */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
     @Bean

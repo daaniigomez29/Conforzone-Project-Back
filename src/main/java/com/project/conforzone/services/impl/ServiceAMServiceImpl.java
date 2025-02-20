@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class ServiceAMServiceImpl implements ServiceAMService {
@@ -16,7 +18,7 @@ public class ServiceAMServiceImpl implements ServiceAMService {
     private final Mapper modelMapper;
     @Override
     public List<ServiceAdditionalMetersModelDto> getAllServicesAM() {
-        return null;
+        return serviceAMRepository.findAll().stream().map(modelMapper::toServiceAdditionalMettersModelDto).collect(Collectors.toList());
     }
 
     @Override
@@ -31,10 +33,5 @@ public class ServiceAMServiceImpl implements ServiceAMService {
         } else {
             throw new GlobalException("La compra no se ha realizado");
         }
-    }
-
-    @Override
-    public ServiceAdditionalMetersModelDto editServiceAM(ServiceAdditionalMetersModelDto serviceAdditionalMettersModelDto) {
-        return null;
     }
 }

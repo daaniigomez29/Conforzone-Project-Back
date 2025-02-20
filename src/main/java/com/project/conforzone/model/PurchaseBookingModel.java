@@ -20,6 +20,7 @@ public class PurchaseBookingModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String transactionId;
     private Date datePurchase;
 
     @Convert(converter = MoneyConverter.class)
