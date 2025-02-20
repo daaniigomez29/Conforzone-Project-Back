@@ -40,6 +40,11 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
     public SpecificServiceModelDto editSpecificService(SpecificServiceModelDto specificServiceModelDto) {
         SpecificServiceModel editedSpecificModel = specificServiceRepository.findById(specificServiceModelDto.getId()).orElse(null);
         if (editedSpecificModel != null){
+            editedSpecificModel.setName(specificServiceModelDto.getName());
+            editedSpecificModel.setBookingPrice(specificServiceModelDto.getBookingPrice());
+            editedSpecificModel.setFirstPrice(specificServiceModelDto.getFirstPrice());
+            editedSpecificModel.setAvailable(specificServiceModelDto.isAvailable());
+            editedSpecificModel.setPricePerMetter(specificServiceModelDto.getPricePerMetter());
             return modelMapper.toSpecificModelDto(specificServiceRepository.save(editedSpecificModel));
         } else {
             throw new GlobalException("El servicio específico no existe");

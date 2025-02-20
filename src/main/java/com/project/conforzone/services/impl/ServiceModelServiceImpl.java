@@ -40,6 +40,7 @@ public class ServiceModelServiceImpl implements ServiceModelService {
     @Override
     public ServiceModelDto editService(ServiceModelDto serviceModelDto) {
         ServiceModel serviceModel = serviceRepository.findById(serviceModelDto.getId()).orElseThrow(() -> new GlobalException("El servicio no existe"));
+        serviceModel.setName(serviceModelDto.getName());
         return modelMapper.toServiceModelDto(serviceRepository.save(serviceModel));
     }
 }

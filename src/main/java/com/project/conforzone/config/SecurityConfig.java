@@ -1,8 +1,6 @@
 package com.project.conforzone.config;
 
 import com.project.conforzone.auth.JwtAuthenticationFilter;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

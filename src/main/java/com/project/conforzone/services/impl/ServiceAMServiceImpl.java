@@ -27,9 +27,9 @@ public class ServiceAMServiceImpl implements ServiceAMService {
     }
 
     @Override
-    public ServiceAdditionalMetersModelDto addServiceAM(ServiceAdditionalMetersModelDto serviceAdditionalMettersModelDto) {
-        if (serviceAdditionalMettersModelDto.getSpecificServiceDto() != null && serviceAdditionalMettersModelDto.getPurchaseBookingDto() != null){
-           return modelMapper.toServiceAdditionalMettersModelDto(serviceAMRepository.save(modelMapper.toServiceAdditionalMettersModel(serviceAdditionalMettersModelDto)));
+    public ServiceAdditionalMetersModelDto addServiceAM(ServiceAdditionalMetersModelDto serviceAdditionalMetersModelDto) {
+        if (serviceAdditionalMetersModelDto.getSpecificServiceDto() != null && serviceAdditionalMetersModelDto.getPurchaseBookingDto() != null){
+           return modelMapper.toServiceAdditionalMettersModelDto(serviceAMRepository.save(modelMapper.toServiceAdditionalMettersModel(serviceAdditionalMetersModelDto)));
         } else {
             throw new GlobalException("La compra no se ha realizado");
         }
