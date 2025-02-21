@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserControllerImpl implements UserController {
     private final UserService userService;
     @Override
-    @GetMapping()
+    @GetMapping(ApiEndpoints.BASE_ID)
     public ResponseEntity<UserModelDto> getUserById(@PathVariable Integer id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }

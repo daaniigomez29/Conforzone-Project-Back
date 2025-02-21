@@ -32,6 +32,8 @@ public class SecurityConfig {
                         authRequest
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers("/api/v1/users/existsEmail/**").permitAll()
+                                .requestMatchers("/api/v1/**/add").hasRole("ADMIN")
+                                .requestMatchers("/api/v1/**/edit/{Id}").hasRole("ADMIN")
                                 .requestMatchers("/api/v1/**").authenticated()
                                 )
                 .sessionManagement(sessionManager ->
