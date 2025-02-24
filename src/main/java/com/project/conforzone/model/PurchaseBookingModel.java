@@ -24,7 +24,7 @@ public class PurchaseBookingModel {
     private Date datePurchase;
 
     @Convert(converter = MoneyConverter.class)
-    @Column(nullable = false, columnDefinition = "NUMERIC(10,2)")
+    @Column(columnDefinition = "NUMERIC(10,2)")
     private Integer totalPrice;
 
     private String address;
@@ -33,6 +33,6 @@ public class PurchaseBookingModel {
     @JoinColumn(name = "id_user", nullable = false)
     private UserModel userPurchase;
 
-    @OneToMany(mappedBy = "purchaseBooking", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "purchaseBooking", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<ServiceAdditionalMetersModel> serviceAdditionalMeters;
 }

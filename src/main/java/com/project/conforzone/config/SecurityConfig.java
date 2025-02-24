@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * Clase para configurar la seguridad de la aplicacion
@@ -32,8 +33,8 @@ public class SecurityConfig {
                         authRequest
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers("/api/v1/users/existsEmail/**").permitAll()
-                                .requestMatchers("/api/v1/**/add").hasRole("ADMIN")
-                                .requestMatchers("/api/v1/**/edit/{Id}").hasRole("ADMIN")
+                                .requestMatchers("/api/v1/specific_services/add").hasRole("ADMIN")
+                                //.requestMatchers("/api/v1/**/edit/{Id}").hasRole("ADMIN")
                                 .requestMatchers("/api/v1/**").authenticated()
                                 )
                 .sessionManagement(sessionManager ->

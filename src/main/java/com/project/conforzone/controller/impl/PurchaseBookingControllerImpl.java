@@ -30,8 +30,8 @@ public class PurchaseBookingControllerImpl implements PurchaseBookingController 
 
     @Override
     @PostMapping(ApiEndpoints.PURCHASE)
-    public ResponseEntity<PurchaseBookingModelDto> addPurchase(@PathVariable Integer userId, @RequestBody PurchaseBookingModelDto purchaseBookingModelDto, @RequestBody List<ServicePurchaseRequest> servicePurchaseRequests) {
-        return ResponseEntity.ok(purchaseBookingService.addPurchase(userId, purchaseBookingModelDto, servicePurchaseRequests));
+    public ResponseEntity<PurchaseBookingModelDto> addPurchase(@PathVariable Integer userId, @RequestBody List<ServicePurchaseRequest> servicePurchaseRequests) {
+        return ResponseEntity.ok(purchaseBookingService.addPurchase(userId, servicePurchaseRequests));
     }
 
     @Override

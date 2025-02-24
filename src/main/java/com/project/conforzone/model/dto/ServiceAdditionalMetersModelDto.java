@@ -1,5 +1,7 @@
 package com.project.conforzone.model.dto;
 
+import com.project.conforzone.util.MoneyConverter;
+import jakarta.persistence.Convert;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,8 +16,7 @@ public class ServiceAdditionalMetersModelDto {
 
     private SpecificServiceModelDto specificServiceDto;
 
-    private PurchaseBookingModelDto purchaseBookingDto;
-
     private Integer additionalMeters;
+    @Convert(converter = MoneyConverter.class)
     private Integer priceAtPurchase;
 }

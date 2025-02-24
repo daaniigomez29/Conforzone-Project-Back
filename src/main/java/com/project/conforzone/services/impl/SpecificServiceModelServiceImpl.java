@@ -7,7 +7,6 @@ import com.project.conforzone.repository.SpecificServiceRepository;
 import com.project.conforzone.services.SpecificServiceModelService;
 import com.project.conforzone.util.Mapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +28,11 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
 
     @Override
     public SpecificServiceModelDto addSpecificService(SpecificServiceModelDto specificServiceModelDto) {
-        if (specificServiceRepository.findByName(specificServiceModelDto.getName())){
+        if (!specificServiceRepository.existsByName(specificServiceModelDto.getName())){
+            specificServiceModelDto.setFirstPrice(specificServiceModelDto.getFirstPrice() * 100);
+            specificServiceModelDto.setSecondPrice(specificServiceModelDto.getSecondPrice() * 100);
+            specificServiceModelDto.setBookingPrice(specificServiceModelDto.getBookingPrice() * 100);
+            specificServiceModelDto.setPricePerMeter(specificServiceModelDto.getPricePerMeter() * 100);
             return modelMapper.toSpecificModelDto(specificServiceRepository.save(modelMapper.toSpecificModel(specificServiceModelDto)));
         } else {
             throw new GlobalException("El servicio específico ya existe");
@@ -44,7 +47,7 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
             editedSpecificModel.setBookingPrice(specificServiceModelDto.getBookingPrice());
             editedSpecificModel.setFirstPrice(specificServiceModelDto.getFirstPrice());
             editedSpecificModel.setAvailable(specificServiceModelDto.isAvailable());
-            editedSpecificModel.setPricePerMetter(specificServiceModelDto.getPricePerMetter());
+            editedSpecificModel.setPricePerMeter(specificServiceModelDto.getPricePerMeter());
             return modelMapper.toSpecificModelDto(specificServiceRepository.save(editedSpecificModel));
         } else {
             throw new GlobalException("El servicio específico no existe");

@@ -20,6 +20,6 @@ public class PurchaseBookingModelDto {
     private String address;
 
     private UserModelDto userPurchaseDto;
-    private List<ServiceAdditionalMetersModelDto> serviceAdditionalMettersDto;
+    private List<ServiceAdditionalMetersModelDto> serviceAdditionalMetersDto;
 
 }

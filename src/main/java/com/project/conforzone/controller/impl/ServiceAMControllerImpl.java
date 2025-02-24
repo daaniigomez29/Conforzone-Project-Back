@@ -2,6 +2,7 @@ package com.project.conforzone.controller.impl;
 
 import com.project.conforzone.common.ApiEndpoints;
 import com.project.conforzone.controller.ServiceAMController;
+import com.project.conforzone.model.ServiceAdditionalMetersModel;
 import com.project.conforzone.model.dto.ServiceAdditionalMetersModelDto;
 import com.project.conforzone.services.ServiceAMService;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class ServiceAMControllerImpl implements ServiceAMController {
 
     @Override
     @PostMapping(ApiEndpoints.BASE_ADD)
-    public ResponseEntity<ServiceAdditionalMetersModelDto> addServiceAM(@RequestBody ServiceAdditionalMetersModelDto serviceAdditionalMetersModelDto) {
-        return ResponseEntity.ok(serviceAMService.addServiceAM(serviceAdditionalMetersModelDto));
+    public ResponseEntity<ServiceAdditionalMetersModelDto> addServiceAM(@RequestBody ServiceAdditionalMetersModel serviceAdditionalMetersModel) {
+        return ResponseEntity.ok(serviceAMService.addServiceAM(serviceAdditionalMetersModel));
     }
 }

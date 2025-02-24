@@ -10,7 +10,7 @@ import java.util.List;
 public interface PurchaseBookingService {
     public List<PurchaseBookingModelDto> getAllPurchases();
     public PurchaseBookingModelDto getPurchaseById(Integer id);
-    public PurchaseBookingModelDto addPurchase(Integer userId, PurchaseBookingModelDto purchaseBookingModelDto, List<ServicePurchaseRequest> servicePurchaseRequests);
+    public PurchaseBookingModelDto addPurchase(Integer userId, List<ServicePurchaseRequest> servicePurchaseRequests);
     public List<PurchaseBookingModelDto> getAllUserPurchases(Integer userId);
 
     // public PurchaseBookingModelDto editPurchase(PurchaseBookingModelDto purchaseBookingModelDto);

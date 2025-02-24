@@ -1,6 +1,7 @@
 package com.project.conforzone.services.impl;
 
 import com.project.conforzone.exception.GlobalException;
+import com.project.conforzone.model.ServiceAdditionalMetersModel;
 import com.project.conforzone.model.dto.ServiceAdditionalMetersModelDto;
 import com.project.conforzone.repository.ServiceAMRepository;
 import com.project.conforzone.services.ServiceAMService;
@@ -27,11 +28,11 @@ public class ServiceAMServiceImpl implements ServiceAMService {
     }
 
     @Override
-    public ServiceAdditionalMetersModelDto addServiceAM(ServiceAdditionalMetersModelDto serviceAdditionalMetersModelDto) {
-        if (serviceAdditionalMetersModelDto.getSpecificServiceDto() != null && serviceAdditionalMetersModelDto.getPurchaseBookingDto() != null){
-           return modelMapper.toServiceAdditionalMettersModelDto(serviceAMRepository.save(modelMapper.toServiceAdditionalMettersModel(serviceAdditionalMetersModelDto)));
+    public ServiceAdditionalMetersModelDto addServiceAM(ServiceAdditionalMetersModel serviceAdditionalMetersModel) {
+        if (serviceAdditionalMetersModel.getSpecificService() != null && serviceAdditionalMetersModel.getPurchaseBooking() != null){
+           return modelMapper.toServiceAdditionalMettersModelDto(serviceAMRepository.save(serviceAdditionalMetersModel));
         } else {
-            throw new GlobalException("La compra no se ha realizado");
+           throw new GlobalException("La compra no se ha realizado");
         }
     }
 }

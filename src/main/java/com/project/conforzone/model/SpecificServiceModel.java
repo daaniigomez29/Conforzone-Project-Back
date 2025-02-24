@@ -33,12 +33,16 @@ public class SpecificServiceModel {
     private Integer secondPrice;
 
     @Convert(converter = MoneyConverter.class)
-    @Column(nullable = false, columnDefinition = "NUMERIC(10,2)")    private Integer bookingPrice;
-    private Integer pricePerMetter;
+    @Column(nullable = false, columnDefinition = "NUMERIC(10,2)")
+    private Integer bookingPrice;
+
+    @Convert(converter = MoneyConverter.class)
+    @Column(nullable = false, columnDefinition = "NUMERIC(10,2)")
+    private Integer pricePerMeter;
 
     private String image;
     private boolean available;
 
-    @OneToMany(mappedBy = "specificService")
-    private List<ServiceAdditionalMetersModel> serviceAdditionalMetters;
+    @OneToMany(mappedBy = "specificService", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<ServiceAdditionalMetersModel> serviceAdditionalMeters;
 }

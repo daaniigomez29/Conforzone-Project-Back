@@ -1,9 +1,16 @@
 package com.project.conforzone.config;
 
 
+import com.project.conforzone.model.PurchaseBookingModel;
+import com.project.conforzone.model.ServiceAdditionalMetersModel;
+import com.project.conforzone.model.UserModel;
+import com.project.conforzone.model.dto.PurchaseBookingModelDto;
+import com.project.conforzone.model.dto.ServiceAdditionalMetersModelDto;
+import com.project.conforzone.model.dto.UserModelDto;
 import com.project.conforzone.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +38,24 @@ public class ApplicationConfig {
 
     @Bean
     public ModelMapper modelMapper() {
-        return new ModelMapper();
+        ModelMapper modelMapper = new ModelMapper();
+
+        // Configurar el ModelMapper
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
+        modelMapper.createTypeMap(PurchaseBookingModel.class, PurchaseBookingModelDto.class)
+                .addMappings(mapper -> {
+                    mapper.map(PurchaseBookingModel::getUserPurchase, PurchaseBookingModelDto::setUserPurchaseDto);
+                    mapper.map(PurchaseBookingModel::getServiceAdditionalMeters, PurchaseBookingModelDto::setServiceAdditionalMetersDto);
+                });
+
+        modelMapper.createTypeMap(UserModel.class, UserModelDto.class);
+
+        modelMapper.createTypeMap(ServiceAdditionalMetersModel.class, ServiceAdditionalMetersModelDto.class)
+                .addMappings(mapper -> {
+                mapper.map(ServiceAdditionalMetersModel::getSpecificService, ServiceAdditionalMetersModelDto::setSpecificServiceDto);
+                });
+        return modelMapper;
     }
 
     @Bean

@@ -7,7 +7,6 @@ import com.project.conforzone.repository.ServiceRepository;
 import com.project.conforzone.services.ServiceModelService;
 import com.project.conforzone.util.Mapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +29,7 @@ public class ServiceModelServiceImpl implements ServiceModelService {
 
     @Override
     public ServiceModelDto addService(ServiceModelDto serviceModelDto) {
-        if (!serviceRepository.findByName(serviceModelDto.getName())){
+        if (!serviceRepository.existsByName(serviceModelDto.getName())){
             return modelMapper.toServiceModelDto(serviceRepository.save(modelMapper.toServiceModel(serviceModelDto)));
         } else {
           throw new GlobalException("El servicio ya existe");

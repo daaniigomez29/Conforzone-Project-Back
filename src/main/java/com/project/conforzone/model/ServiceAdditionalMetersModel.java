@@ -12,21 +12,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor //Constructor sin argumentos
 @AllArgsConstructor //Constructor con todos los argumentos
 @Entity
-@Table(name = "service_additional_metters_table")
+@Table(name = "service_additional_meters_table")
 public class ServiceAdditionalMetersModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "specific_service_id")
     private SpecificServiceModel specificService;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "purchase_booking_id")
     private PurchaseBookingModel purchaseBooking;
 
-    private Integer additionalMetters;
+    private Integer additionalMeters;
     @Convert(converter = MoneyConverter.class)
     @Column(columnDefinition = "NUMERIC(10,2)")
     private Integer priceAtPurchase;
