@@ -77,7 +77,7 @@ public class AuthServiceImpl implements AuthService {
 
                     userCacheService.storeUserData(request.getEmail(), request);
 
-                    String urlConfirmation = "http://localhost:9542/api/v1/auth/confirm-register/" + tokenRegister;
+                    String urlConfirmation = "https://conforzone-project-back-production.up.railway.app/api/v1/auth/confirm-register/" + tokenRegister;
                     emailSenderService.sendEmailRegistration(request.getEmail(), request.getName(), urlConfirmation);
 
                     return modelMapper.toTokenModelDto(tokenModel);
