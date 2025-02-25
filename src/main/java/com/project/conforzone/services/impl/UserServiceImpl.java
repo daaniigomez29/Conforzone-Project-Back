@@ -32,6 +32,8 @@ public class UserServiceImpl implements UserService {
         UserModel userEdit = userRepository.findById(userModelDto.getId()).orElseThrow(() -> new GlobalException("El usuario a editar no existe"));
         userEdit.setName(userModelDto.getName());
         userEdit.setTlf(userModelDto.getTlf());
+        userEdit.setAddress(userModelDto.getAddress());
+        userEdit.setLastName(userModelDto.getLastName());
 
         Map<String, Object> extraClaims = new HashMap<>(); //Declara toda la información que quiere que tenga el token además del correo
         extraClaims.put("idUser", userEdit.getId());

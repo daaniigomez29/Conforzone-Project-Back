@@ -2,13 +2,13 @@ package com.project.conforzone.services.impl;
 
 import com.project.conforzone.model.TokenModel;
 import com.project.conforzone.model.dto.*;
-import com.project.conforzone.repository.TokenRepository;
 import com.project.conforzone.security.JwtService;
 import com.project.conforzone.exception.GlobalException;
 import com.project.conforzone.model.UserModel;
 import com.project.conforzone.repository.UserRepository;
 import com.project.conforzone.services.AuthService;
 import com.project.conforzone.services.EmailSenderService;
+import com.project.conforzone.services.TokenService;
 import com.project.conforzone.util.Mapper;
 import com.project.conforzone.util.PatternEmail;
 import jakarta.mail.MessagingException;

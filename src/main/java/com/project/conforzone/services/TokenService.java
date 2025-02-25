@@ -1,4 +1,4 @@
-package com.project.conforzone.services.impl;
+package com.project.conforzone.services;
 
 import com.project.conforzone.model.TokenModel;
 import com.project.conforzone.model.dto.TokenModelDto;

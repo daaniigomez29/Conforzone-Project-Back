@@ -11,10 +11,6 @@ import org.springframework.context.event.EventListener;
 
 @SpringBootApplication
 public class ConforzoneApplication {
-
-	@Autowired
-	private EmailSenderService emailSenderService;
-
 	public static void main(String[] args) {
 		SpringApplication.run(ConforzoneApplication.class, args);
 	}
