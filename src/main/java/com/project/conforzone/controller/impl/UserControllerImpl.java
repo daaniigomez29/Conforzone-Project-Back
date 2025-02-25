@@ -1,6 +1,6 @@
 package com.project.conforzone.controller.impl;
 
-import com.project.conforzone.auth.AuthResponse;
+import com.project.conforzone.model.dto.AuthResponse;
 import com.project.conforzone.common.ApiEndpoints;
 import com.project.conforzone.controller.UserController;
 import com.project.conforzone.model.dto.UserModelDto;

@@ -1,4 +1,4 @@
-package com.project.conforzone.auth;
+package com.project.conforzone.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,5 @@
 package com.project.conforzone.model;
 
-import com.project.conforzone.util.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,11 +24,14 @@ public class UserModel implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
     private String name;
+    private String lastName;
+    private String address;
     @Column(nullable = false)
     private String password;
+    @Column(length = 9)
     private String tlf;
     @Enumerated(EnumType.STRING)
     private Role role;

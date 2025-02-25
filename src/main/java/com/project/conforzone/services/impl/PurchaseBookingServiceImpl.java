@@ -17,6 +17,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +30,6 @@ public class PurchaseBookingServiceImpl implements PurchaseBookingService {
     private final UserRepository userRepository;
     private final ServiceAMRepository serviceAMRepository;
     private final Mapper modelMapper;
-    private final ServiceAMService serviceAMService;
     private final SpecificServiceRepository specificServiceRepository;
 
     @Override
@@ -45,15 +45,17 @@ public class PurchaseBookingServiceImpl implements PurchaseBookingService {
     @Transactional(rollbackOn = Exception.class) //Asegura que la compra no se guarde en la bbdd cuando haya cualquier Exception
     @Override
     public PurchaseBookingModelDto addPurchase(Integer userId, List<ServicePurchaseRequest> servicePurchaseRequests) {
-        UserModelDto userModelDto = modelMapper.toUserDTO(userRepository.findById(userId).orElseThrow(() -> new GlobalException("El usuario no existe")));
+        UserModel userModel = userRepository.findById(userId).orElseThrow(() -> new GlobalException("El usuario no existe"));
         PurchaseBookingModel purchase = new PurchaseBookingModel();
-        purchase.setDatePurchase(new Date());
-        purchase.setUserPurchase(modelMapper.toUser(userModelDto));
+        purchase.setDatePurchase(LocalDateTime.now());
+        purchase.setUserPurchase(userModel);
+        purchase.setAddress(userModel.getAddress());
 
         purchase = purchaseBookingRepository.save(purchase);
 
         List<ServiceAdditionalMetersModel> serviceAdditionalMetersList = new ArrayList<>();
         int totalPrice = 0;
+        int bookingTotalPrice = 0;
 
         for (ServicePurchaseRequest servicePurchaseRequest : servicePurchaseRequests) {
             SpecificServiceModel specificServiceToBuy = specificServiceRepository.findById(servicePurchaseRequest.getSpecificServiceModel().getId()).orElseThrow(() -> new GlobalException("El servicio específico no se encuentra"));
@@ -74,6 +76,7 @@ public class PurchaseBookingServiceImpl implements PurchaseBookingService {
                 serviceToBuy.setPurchaseBooking(purchase); //Asigna el servicio con sus metros adicionales a la compra
 
                 totalPrice += priceAtPurchase;
+                bookingTotalPrice += specificServiceToBuy.getBookingPrice();
                 serviceAdditionalMetersList.add(serviceToBuy);
                 serviceAMRepository.save(serviceToBuy);
             } else {
@@ -82,6 +85,7 @@ public class PurchaseBookingServiceImpl implements PurchaseBookingService {
         }
         purchase.setServiceAdditionalMeters(serviceAdditionalMetersList);
         purchase.setTotalPrice(totalPrice);
+        purchase.setBookingTotalPrice(bookingTotalPrice);
 
         purchaseBookingRepository.save(purchase);
         return modelMapper.toPurchaseBookingModelDto(purchase);

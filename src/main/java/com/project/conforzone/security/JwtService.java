@@ -1,19 +1,20 @@
-package com.project.conforzone.auth;
+package com.project.conforzone.security;
 
 import com.project.conforzone.exception.TokenExpiredException;
+import com.project.conforzone.model.dto.RegisterRequest;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -33,6 +34,10 @@ public class JwtService {
         return getToken(extraClaims, user);
     }
 
+    public String getTokenToRegisterFromService(RegisterRequest request){
+        return getTokenToRegister(request);
+    }
+
     /**
      * Convierte los diferentes datos en token
      * @param extraClaims Diferentes datos que contiene el token aparte del asunto (correo)
@@ -44,6 +49,17 @@ public class JwtService {
                 .builder()
                 .setClaims(extraClaims)
                 .setSubject(user.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60*2))
+                .signWith(getKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    private String getTokenToRegister(RegisterRequest request) {
+        return Jwts
+                .builder()
+                .setClaims(new HashMap<>())
+                .setSubject(request.getEmail())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60*2))
                 .signWith(getKey(), SignatureAlgorithm.HS256)

@@ -1,4 +1,4 @@
-package com.project.conforzone.auth;
+package com.project.conforzone.security;
 
 import com.project.conforzone.exception.TokenExpiredException;
 import jakarta.servlet.FilterChain;

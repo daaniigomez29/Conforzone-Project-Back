@@ -42,4 +42,10 @@ public class Mapper {
     public ServiceModel toServiceModel(ServiceModelDto serviceModelDto){
         return modelMapper.map(serviceModelDto, ServiceModel.class);
     }
+    public TokenModel toTokenModel(TokenModelDto tokenModelDto){
+        return modelMapper.map(tokenModelDto, TokenModel.class);
+    }
+    public TokenModelDto toTokenModelDto(TokenModel tokenModel){
+        return modelMapper.map(tokenModel, TokenModelDto.class);
+    }
 }

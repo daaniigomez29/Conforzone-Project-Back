@@ -1,11 +1,10 @@
 package com.project.conforzone.services;
 
-import com.project.conforzone.auth.AuthResponse;
-import com.project.conforzone.model.dto.LoginRequest;
-import com.project.conforzone.model.dto.RegisterRequest;
-import com.project.conforzone.model.dto.UserModelDto;
+import com.project.conforzone.model.dto.*;
+import jakarta.mail.MessagingException;
 
 public interface AuthService {
     public AuthResponse login(LoginRequest loginRequest);
-    public UserModelDto register(RegisterRequest registerRequest);
+    public TokenModelDto register(RegisterRequest registerRequest) throws MessagingException;
+    public void confirmRegister(String token) throws MessagingException;
 }

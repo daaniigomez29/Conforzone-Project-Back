@@ -1,12 +1,10 @@
 package com.project.conforzone.controller.impl;
 
-import com.project.conforzone.auth.AuthResponse;
+import com.project.conforzone.model.dto.*;
 import com.project.conforzone.common.ApiEndpoints;
 import com.project.conforzone.controller.AuthController;
-import com.project.conforzone.model.dto.LoginRequest;
-import com.project.conforzone.model.dto.RegisterRequest;
-import com.project.conforzone.model.dto.UserModelDto;
 import com.project.conforzone.services.AuthService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +16,14 @@ public class AuthControllerImpl implements AuthController {
     private final AuthService authService;
     @Override
     @PostMapping(ApiEndpoints.REGISTER_API)
-    public ResponseEntity<UserModelDto> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<TokenModelDto> register(@RequestBody RegisterRequest registerRequest) throws MessagingException {
         return ResponseEntity.ok(authService.register(registerRequest));
+    }
+
+    @Override
+    @GetMapping(ApiEndpoints.CONFIRM_REGISTER_API)
+    public void confirmRegister(@PathVariable String token) throws MessagingException {
+        authService.confirmRegister(token);
     }
 
     @Override

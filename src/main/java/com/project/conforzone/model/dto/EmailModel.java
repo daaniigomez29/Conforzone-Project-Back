@@ -1,4 +1,4 @@
-package com.project.conforzone.model;
+package com.project.conforzone.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,5 +8,4 @@ import lombok.Data;
 public class EmailModel {
     private String toEmail;
     private String subject;
-    private String body;
 }

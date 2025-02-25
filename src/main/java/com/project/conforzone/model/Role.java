@@ -1,4 +1,4 @@
-package com.project.conforzone.util;
+package com.project.conforzone.model;
 
 
 public enum Role {

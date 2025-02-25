@@ -1,12 +1,12 @@
 package com.project.conforzone.controller;
 
-import com.project.conforzone.auth.AuthResponse;
-import com.project.conforzone.model.dto.LoginRequest;
-import com.project.conforzone.model.dto.RegisterRequest;
-import com.project.conforzone.model.dto.UserModelDto;
+import com.project.conforzone.model.dto.*;
+import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
 
 public interface AuthController {
-    public ResponseEntity<UserModelDto> register(RegisterRequest registerRequest);
+    public ResponseEntity<TokenModelDto> register(RegisterRequest registerRequest) throws MessagingException;
+    public void confirmRegister(String token) throws MessagingException;
+
     public ResponseEntity<AuthResponse> login(LoginRequest loginRequest);
 }

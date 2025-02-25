@@ -11,6 +11,7 @@ public class ApiEndpoints {
     public static final String BASE_AUTH= "/auth";
     public static final String LOGIN_API = "/login";
     public static final String REGISTER_API = "/register";
+    public static final String CONFIRM_REGISTER_API = "confirm-register/{token}";
 
     //User
     public static final String BASE_USER = "/users";

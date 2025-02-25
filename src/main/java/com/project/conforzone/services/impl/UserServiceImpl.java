@@ -1,10 +1,9 @@
 package com.project.conforzone.services.impl;
 
-import com.project.conforzone.auth.AuthResponse;
-import com.project.conforzone.auth.JwtService;
+import com.project.conforzone.model.dto.AuthResponse;
+import com.project.conforzone.security.JwtService;
 import com.project.conforzone.exception.GlobalException;
 import com.project.conforzone.model.UserModel;
-import com.project.conforzone.model.dto.PurchaseBookingModelDto;
 import com.project.conforzone.model.dto.UserModelDto;
 import com.project.conforzone.repository.UserRepository;
 import com.project.conforzone.services.UserService;

@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -21,11 +22,15 @@ public class PurchaseBookingModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String transactionId;
-    private Date datePurchase;
+    private LocalDateTime datePurchase;
 
     @Convert(converter = MoneyConverter.class)
     @Column(columnDefinition = "NUMERIC(10,2)")
     private Integer totalPrice;
+
+    @Convert(converter = MoneyConverter.class)
+    @Column(columnDefinition = "NUMERIC(10,2)")
+    private Integer bookingTotalPrice;
 
     private String address;
 

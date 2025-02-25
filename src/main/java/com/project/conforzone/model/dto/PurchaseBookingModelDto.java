@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public class PurchaseBookingModelDto {
     private Integer id;
     private String transactionId;
-    private Date datePurchase;
+    private LocalDateTime datePurchase;
     private Integer totalPrice;
     private String address;
 

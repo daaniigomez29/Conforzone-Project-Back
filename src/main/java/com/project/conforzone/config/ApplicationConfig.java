@@ -43,6 +43,7 @@ public class ApplicationConfig {
         // Configurar el ModelMapper
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
+        //Configura el mapeo entre el UserPurchase y ServiceAdditionalMetersDto de PurchaseBookingModel para transformarlos a Dto
         modelMapper.createTypeMap(PurchaseBookingModel.class, PurchaseBookingModelDto.class)
                 .addMappings(mapper -> {
                     mapper.map(PurchaseBookingModel::getUserPurchase, PurchaseBookingModelDto::setUserPurchaseDto);
