@@ -143,8 +143,9 @@ public class AuthServiceImpl implements AuthService {
         } else {
             if (tokenExpired){
                 tokenService.deleteByToken(token);
+                return "El registro ha sido incorrecto, ha expirado, por favor, vuelva a registrarse";
             }
-            return "El registro ha sido incorrecto, ha expirado, por favor, vuelva a registrarse";
+            return "Ya se ha registrado previamente";
         }
     }
 }
