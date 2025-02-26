@@ -1,5 +1,6 @@
 package com.project.conforzone.services.impl;
 
+import com.project.conforzone.model.Role;
 import com.project.conforzone.model.TokenModel;
 import com.project.conforzone.model.dto.*;
 import com.project.conforzone.security.JwtService;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -64,25 +66,44 @@ public class AuthServiceImpl implements AuthService {
      */
     public TokenModelDto register(RegisterRequest request) throws MessagingException {
         boolean userExist;
+        boolean tokenExpired = false;
         TokenModel tokenModel = new TokenModel();
 
         if (PatternEmail.isValidEmail(request.getEmail())) {
             userExist = userRepository.findByEmail(request.getEmail()).isPresent();
             if (!userExist) {
                 String tokenRegister = jwtService.getTokenToRegisterFromService(request);
-                if (!tokenService.userAlreadyRegister(request.getEmail())) {
+                Optional<TokenModelDto> tokenModelDtoOpt = tokenService.findByEmail(request.getEmail());
+
+                if (tokenModelDtoOpt.isPresent()){
+                    TokenModelDto tokenModelDto = tokenModelDtoOpt.get();
+
+                    try { //Verifica si el token ha expirado sin que lanze la excepción para que el flujo continue
+                        tokenExpired = tokenModelDto.getToken() != null && tokenService.isTokenExpired(tokenModelDto.getToken());
+                    } catch (Exception e) {
+                        System.out.println("Error verificando si el token ha expirado: " + e.getMessage());
+                        tokenExpired = true;
+                    }
+
+                    if (tokenExpired) {
+                        tokenService.deleteByToken(tokenModelDto.getToken());
+                    }
+                }
+
+                if (!tokenService.userAlreadyRegister(request.getEmail()) || tokenExpired) {
                     tokenModel.setToken(tokenRegister);
                     tokenModel.setEmail(request.getEmail());
                     tokenService.addToken(tokenModel);
 
                     userCacheService.storeUserData(request.getEmail(), request);
 
-                    String urlConfirmation = "https://conforzone-project-back-production.up.railway.app/api/v1/auth/confirm-register/" + tokenRegister;
+                    String urlConfirmation = "http://localhost:8080/api/v1/auth/confirm-register/" + tokenRegister;
+                    //https://conforzone-project-back-production.up.railway.app/api/v1/auth/confirm-register/" + tokenRegister
                     emailSenderService.sendEmailRegistration(request.getEmail(), request.getName(), urlConfirmation);
 
                     return modelMapper.toTokenModelDto(tokenModel);
                 } else {
-                    throw new GlobalException("El usuario ya se ha registrado previamente");
+                    throw new GlobalException("El usuario ya se ha registrado");
                 }
             } else {
                 throw new GlobalException("Ya existe un usuario con ese correo");
@@ -93,8 +114,16 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public void confirmRegister(String token) throws MessagingException {
-        if (tokenService.findByToken(token).isPresent()) {
+    public String confirmRegister(String token) throws MessagingException {
+        boolean tokenExpired;
+        try {
+            tokenExpired = tokenService.isTokenExpired(token);
+        } catch (Exception e) {
+            System.out.println("Error verificando si el token ha expirado: " + e.getMessage());
+            tokenExpired = true;
+        }
+
+        if (tokenService.findByToken(token).isPresent() && !tokenExpired) {
             String userEmail = jwtService.getUsernameFromToken(token);
             RegisterRequest request = userCacheService.getRegisterRequest(userEmail);
             UserModel user = UserModel.builder()
@@ -104,14 +133,18 @@ public class AuthServiceImpl implements AuthService {
                     .lastName(request.getLastName())
                     .address(request.getAddress())
                     .tlf(request.getTlf())
-                    .role(request.getRole())
+                    .role(Role.USER)
                     .build();
 
             userRepository.save(user);
             tokenService.deleteByToken(token);
             userCacheService.removeUserData(userEmail);
+            return "El registro ha sido correcto";
         } else {
-            throw new GlobalException("El token de registro no existe");
+            if (tokenExpired){
+                tokenService.deleteByToken(token);
+            }
+            return "El registro ha sido incorrecto, ha expirado, por favor, vuelva a registrarse";
         }
     }
 }

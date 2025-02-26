@@ -22,8 +22,8 @@ public class AuthControllerImpl implements AuthController {
 
     @Override
     @GetMapping(ApiEndpoints.CONFIRM_REGISTER_API)
-    public void confirmRegister(@PathVariable String token) throws MessagingException {
-        authService.confirmRegister(token);
+    public String confirmRegister(@PathVariable String token) throws MessagingException {
+        return authService.confirmRegister(token);
     }
 
     @Override

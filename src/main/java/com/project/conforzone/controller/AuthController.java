@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface AuthController {
     public ResponseEntity<TokenModelDto> register(RegisterRequest registerRequest) throws MessagingException;
-    public void confirmRegister(String token) throws MessagingException;
+    public String confirmRegister(String token) throws MessagingException;
 
     public ResponseEntity<AuthResponse> login(LoginRequest loginRequest);
 }

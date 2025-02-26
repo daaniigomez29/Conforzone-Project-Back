@@ -1,5 +1,6 @@
 package com.project.conforzone.services.impl;
 
+import com.project.conforzone.exception.GlobalException;
 import com.project.conforzone.model.TokenModel;
 import com.project.conforzone.model.dto.TokenModelDto;
 import com.project.conforzone.repository.TokenRepository;
@@ -30,8 +31,24 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
+    public Optional<TokenModelDto> findByEmail(String email) {
+        TokenModel tokenSearch = tokenRepository.findByEmail(email);
+
+        if(tokenSearch != null){
+            return Optional.of(mapper.toTokenModelDto(tokenSearch));
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    @Override
     public boolean userAlreadyRegister(String email) {
         return tokenRepository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean isTokenExpired(String token) {
+        return jwtService.isTokenRegisterValid(token);
     }
 
     @Override

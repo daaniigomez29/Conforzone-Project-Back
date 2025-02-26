@@ -61,7 +61,7 @@ public class JwtService {
                 .setClaims(new HashMap<>())
                 .setSubject(request.getEmail())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60*2))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*60*24))
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -93,6 +93,10 @@ public class JwtService {
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username=getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername())&& !isTokenExpired(token));
+    }
+
+    public boolean isTokenRegisterValid(String token) {
+        return isTokenExpired(token);
     }
 
     /**
@@ -139,7 +143,7 @@ public class JwtService {
     /**
      * Comprueba que el token no esta expirado
      * @param token token
-     * @return true si no esta expirado, false si lo esta
+     * @return true si esta expirado, false si no lo esta
      */
     private boolean isTokenExpired(String token)
     {
