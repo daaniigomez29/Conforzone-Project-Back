@@ -11,6 +11,7 @@ public class MoneyConverter implements AttributeConverter<Integer, Double> {
 
     @Override
     public Integer convertToEntityAttribute(Double euros) {
-        return euros == null ? null : (int) (euros * 100);
+        System.out.println("Dinero de la llamada: " + euros);
+        return euros == null ? null : (int) Math.round(euros * 100);
     }
 }

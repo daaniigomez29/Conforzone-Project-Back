@@ -24,13 +24,13 @@ public class PurchaseBookingModel {
     private String transactionId;
     private LocalDateTime datePurchase;
 
-    @Convert(converter = MoneyConverter.class)
+    //@Convert(converter = MoneyConverter.class)
     @Column(columnDefinition = "NUMERIC(10,2)")
-    private Integer totalPrice;
+    private Double totalPrice;
 
-    @Convert(converter = MoneyConverter.class)
+    //@Convert(converter = MoneyConverter.class)
     @Column(columnDefinition = "NUMERIC(10,2)")
-    private Integer bookingTotalPrice;
+    private Double bookingTotalPrice;
 
     private String address;
 

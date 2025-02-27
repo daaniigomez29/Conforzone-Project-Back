@@ -60,23 +60,25 @@ public class PurchaseBookingServiceImpl implements PurchaseBookingService {
         for (ServicePurchaseRequest servicePurchaseRequest : servicePurchaseRequests) {
             SpecificServiceModel specificServiceToBuy = specificServiceRepository.findById(servicePurchaseRequest.getSpecificServiceModel().getId()).orElseThrow(() -> new GlobalException("El servicio específico no se encuentra"));
             int additionalMeters = servicePurchaseRequest.getAdditionalMeters();
+            int firstPriceCents = (int) Math.round(specificServiceToBuy.getFirstPrice() * 100);
             if (specificServiceToBuy.isAvailable()) {
                 ServiceAdditionalMetersModel serviceToBuy = new ServiceAdditionalMetersModel();
 
-                int priceAtPurchase = specificServiceToBuy.getFirstPrice();
+                int priceAtPurchase = firstPriceCents;
                 //Comprobar que luego se le asigna un id a cada entidad en la bbdd
 
                 serviceToBuy.setSpecificService(specificServiceToBuy);
                 serviceToBuy.setAdditionalMeters(additionalMeters);
                 if (additionalMeters > 0) {
-                    priceAtPurchase = (specificServiceToBuy.getPricePerMeter() * additionalMeters) + specificServiceToBuy.getFirstPrice();
-                    serviceToBuy.setPriceAtPurchase(priceAtPurchase);
+                    int pricePerMeterCents = (int) Math.round(specificServiceToBuy.getPricePerMeter() * 100);
+                    priceAtPurchase = (pricePerMeterCents * additionalMeters) + firstPriceCents;
+                    serviceToBuy.setPriceAtPurchase(priceAtPurchase / 100.0);
                 }
-                serviceToBuy.setPriceAtPurchase(priceAtPurchase);
+                serviceToBuy.setPriceAtPurchase(priceAtPurchase / 100.0);
                 serviceToBuy.setPurchaseBooking(purchase); //Asigna el servicio con sus metros adicionales a la compra
 
                 totalPrice += priceAtPurchase;
-                bookingTotalPrice += specificServiceToBuy.getBookingPrice();
+                bookingTotalPrice += (int) Math.round(specificServiceToBuy.getBookingPrice() * 100);
                 serviceAdditionalMetersList.add(serviceToBuy);
                 serviceAMRepository.save(serviceToBuy);
             } else {
@@ -84,8 +86,8 @@ public class PurchaseBookingServiceImpl implements PurchaseBookingService {
             }
         }
         purchase.setServiceAdditionalMeters(serviceAdditionalMetersList);
-        purchase.setTotalPrice(totalPrice);
-        purchase.setBookingTotalPrice(bookingTotalPrice);
+        purchase.setTotalPrice(totalPrice / 100.0);
+        purchase.setBookingTotalPrice(bookingTotalPrice / 100.0);
 
         purchaseBookingRepository.save(purchase);
         return modelMapper.toPurchaseBookingModelDto(purchase);

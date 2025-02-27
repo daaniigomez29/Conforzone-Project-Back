@@ -22,6 +22,12 @@ public class SpecificServiceControllerImpl implements SpecificServiceController 
     }
 
     @Override
+    @GetMapping(ApiEndpoints.SPECIFIC_SERVICE_OFFER)
+    public ResponseEntity<List<SpecificServiceModelDto>> getAllOfferSpecificServices() {
+        return ResponseEntity.ok(specificServiceModelService.getAllOfferSpecificServices());
+    }
+
+    @Override
     @GetMapping(ApiEndpoints.BASE_ID)
     public ResponseEntity<SpecificServiceModelDto> getSpecificServiceById(@PathVariable Integer id) {
         return ResponseEntity.ok(specificServiceModelService.getSpecificServiceById(id));
@@ -35,7 +41,7 @@ public class SpecificServiceControllerImpl implements SpecificServiceController 
 
     @Override
     @PutMapping(ApiEndpoints.BASE_EDIT + ApiEndpoints.BASE_ID)
-    public ResponseEntity<SpecificServiceModelDto> editSpecificService(@RequestBody SpecificServiceModelDto specificServiceModelDto) {
-        return ResponseEntity.ok(specificServiceModelService.editSpecificService(specificServiceModelDto));
+    public ResponseEntity<SpecificServiceModelDto> editSpecificService(@RequestBody SpecificServiceModelDto specificServiceModelDto, @PathVariable Integer id) {
+        return ResponseEntity.ok(specificServiceModelService.editSpecificService(specificServiceModelDto, id));
     }
 }

@@ -24,24 +24,26 @@ public class SpecificServiceModel {
     private String name;
     private String description;
 
-    @Convert(converter = MoneyConverter.class)
+    //@Convert(converter = MoneyConverter.class)
     @Column(nullable = false, columnDefinition = "NUMERIC(10,2)")
-    private Integer firstPrice;
+    private Double firstPrice;
 
-    @Convert(converter = MoneyConverter.class)
+    //@Convert(converter = MoneyConverter.class)
     @Column(nullable = false, columnDefinition = "NUMERIC(10,2)")
-    private Integer secondPrice;
+    private Double secondPrice;
 
-    @Convert(converter = MoneyConverter.class)
+    //@Convert(converter = MoneyConverter.class)
     @Column(nullable = false, columnDefinition = "NUMERIC(10,2)")
-    private Integer bookingPrice;
+    private Double bookingPrice;
 
-    @Convert(converter = MoneyConverter.class)
+    //@Convert(converter = MoneyConverter.class)
     @Column(nullable = false, columnDefinition = "NUMERIC(10,2)")
-    private Integer pricePerMeter;
+    private Double pricePerMeter;
 
     private String image;
     private boolean available;
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean offer;
 
     @OneToMany(mappedBy = "specificService", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<ServiceAdditionalMetersModel> serviceAdditionalMeters;

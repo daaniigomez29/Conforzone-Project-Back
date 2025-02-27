@@ -3,9 +3,11 @@ package com.project.conforzone.config;
 
 import com.project.conforzone.model.PurchaseBookingModel;
 import com.project.conforzone.model.ServiceAdditionalMetersModel;
+import com.project.conforzone.model.SpecificServiceModel;
 import com.project.conforzone.model.UserModel;
 import com.project.conforzone.model.dto.PurchaseBookingModelDto;
 import com.project.conforzone.model.dto.ServiceAdditionalMetersModelDto;
+import com.project.conforzone.model.dto.SpecificServiceModelDto;
 import com.project.conforzone.model.dto.UserModelDto;
 import com.project.conforzone.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -56,6 +58,12 @@ public class ApplicationConfig {
                 .addMappings(mapper -> {
                 mapper.map(ServiceAdditionalMetersModel::getSpecificService, ServiceAdditionalMetersModelDto::setSpecificServiceDto);
                 });
+    /*
+        modelMapper.createTypeMap(SpecificServiceModel.class, SpecificServiceModelDto.class)
+                .addMappings(mapper -> {
+                    mapper.map(SpecificServiceModel::getServiceAdditionalMeters, SpecificServiceModelDto::setServiceAdditionalMetersDto);
+                });
+     */
         return modelMapper;
     }
 

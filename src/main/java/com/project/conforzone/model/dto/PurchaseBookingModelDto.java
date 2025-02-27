@@ -17,7 +17,7 @@ public class PurchaseBookingModelDto {
     private Integer id;
     private String transactionId;
     private LocalDateTime datePurchase;
-    private Integer totalPrice;
+    private Double totalPrice;
     private String address;
 
     private UserModelDto userPurchaseDto;

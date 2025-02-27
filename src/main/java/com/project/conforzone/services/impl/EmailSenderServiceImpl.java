@@ -1,6 +1,7 @@
 package com.project.conforzone.services.impl;
 
 import com.project.conforzone.model.TokenModel;
+import com.project.conforzone.model.dto.PurchaseBookingModelDto;
 import com.project.conforzone.services.EmailSenderService;
 import com.project.conforzone.util.PatternEmail;
 import jakarta.mail.MessagingException;
@@ -36,8 +37,6 @@ public class EmailSenderServiceImpl implements EmailSenderService {
                 helper.setTo(toEmail);
                 helper.setSubject("Confirmación de registro");
 
-
-
                 helper.setText(body, true);
                 javaMailSender.send(mimeMessage);
             } catch (MessagingException messagingException) {
@@ -51,7 +50,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     }
 
     @Override
-    public void sendEmailConfirmedPurchase(String toEmail) {
+    public void sendEmailConfirmedPurchase(String toEmail, String nameUser, PurchaseBookingModelDto purchaseBookingModelDto) {
 
     }
 }

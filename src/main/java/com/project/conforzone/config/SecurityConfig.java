@@ -33,7 +33,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers("/api/v1/users/existsEmail/**").permitAll()
                                 .requestMatchers("/api/v1/specific_services/add").hasRole("ADMIN")
-                                //.requestMatchers("/api/v1/**/edit/{Id}").hasRole("ADMIN")
+                                .requestMatchers("/api/v1/specific_services/edit/{Id}").hasRole("ADMIN")
                                 .requestMatchers("/api/v1/**").authenticated()
                                 )
                 .sessionManagement(sessionManager ->

@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +20,19 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
     private final Mapper modelMapper;
     @Override
     public List<SpecificServiceModelDto> getAllSpecificServices() {
-        return specificServiceRepository.findAll().stream().map(modelMapper::toSpecificModelDto).toList();
+        return specificServiceRepository.findAll().stream().map(modelMapper::toSpecificModelDto)
+                .peek(specificServiceModelDto -> {
+                    specificServiceModelDto.setFirstPrice(specificServiceModelDto.getFirstPrice() * 100);
+                    specificServiceModelDto.setSecondPrice(specificServiceModelDto.getSecondPrice() * 100);
+                    specificServiceModelDto.setBookingPrice(specificServiceModelDto.getBookingPrice() * 100);
+                    specificServiceModelDto.setPricePerMeter(specificServiceModelDto.getPricePerMeter() * 100);
+                })
+                .toList();
+    }
+
+    @Override
+    public List<SpecificServiceModelDto> getAllOfferSpecificServices() {
+        return specificServiceRepository.findByOfferTrue().stream().map(modelMapper::toSpecificModelDto).toList();
     }
 
     @Override
@@ -29,10 +43,10 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
     @Override
     public SpecificServiceModelDto addSpecificService(SpecificServiceModelDto specificServiceModelDto) {
         if (!specificServiceRepository.existsByName(specificServiceModelDto.getName())){
-            specificServiceModelDto.setFirstPrice(specificServiceModelDto.getFirstPrice() * 100);
-            specificServiceModelDto.setSecondPrice(specificServiceModelDto.getSecondPrice() * 100);
-            specificServiceModelDto.setBookingPrice(specificServiceModelDto.getBookingPrice() * 100);
-            specificServiceModelDto.setPricePerMeter(specificServiceModelDto.getPricePerMeter() * 100);
+            specificServiceModelDto.setFirstPrice(specificServiceModelDto.getFirstPrice());
+            specificServiceModelDto.setSecondPrice(specificServiceModelDto.getSecondPrice());
+            specificServiceModelDto.setBookingPrice(specificServiceModelDto.getBookingPrice());
+            specificServiceModelDto.setPricePerMeter(specificServiceModelDto.getPricePerMeter());
             return modelMapper.toSpecificModelDto(specificServiceRepository.save(modelMapper.toSpecificModel(specificServiceModelDto)));
         } else {
             throw new GlobalException("El servicio específico ya existe");
@@ -40,17 +54,20 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
     }
 
     @Override
-    public SpecificServiceModelDto editSpecificService(SpecificServiceModelDto specificServiceModelDto) {
+    public SpecificServiceModelDto editSpecificService(SpecificServiceModelDto specificServiceModelDto, Integer idPath) {
         SpecificServiceModel editedSpecificModel = specificServiceRepository.findById(specificServiceModelDto.getId()).orElse(null);
-        if (editedSpecificModel != null){
+        if (editedSpecificModel != null && Objects.equals(editedSpecificModel.getId(), idPath)){
             editedSpecificModel.setName(specificServiceModelDto.getName());
+            editedSpecificModel.setDescription(specificServiceModelDto.getDescription());
             editedSpecificModel.setBookingPrice(specificServiceModelDto.getBookingPrice());
             editedSpecificModel.setFirstPrice(specificServiceModelDto.getFirstPrice());
+            editedSpecificModel.setSecondPrice(specificServiceModelDto.getSecondPrice());
             editedSpecificModel.setAvailable(specificServiceModelDto.isAvailable());
             editedSpecificModel.setPricePerMeter(specificServiceModelDto.getPricePerMeter());
+            editedSpecificModel.setOffer(specificServiceModelDto.isOffer());
             return modelMapper.toSpecificModelDto(specificServiceRepository.save(editedSpecificModel));
         } else {
-            throw new GlobalException("El servicio específico no existe");
+            throw new GlobalException("El servicio específico no existe o su id es erróneo");
         }
     }
 }

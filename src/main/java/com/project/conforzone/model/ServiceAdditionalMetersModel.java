@@ -27,7 +27,7 @@ public class ServiceAdditionalMetersModel {
     private PurchaseBookingModel purchaseBooking;
 
     private Integer additionalMeters;
-    @Convert(converter = MoneyConverter.class)
+    //@Convert(converter = MoneyConverter.class)
     @Column(columnDefinition = "NUMERIC(10,2)")
-    private Integer priceAtPurchase;
+    private Double priceAtPurchase;
 }
