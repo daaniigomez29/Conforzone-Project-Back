@@ -90,7 +90,7 @@ public class AuthServiceImpl implements AuthService {
                     }
                 }
 
-                if (!tokenService.userAlreadyRegister(request.getEmail()) || tokenExpired) {
+                if (!tokenService.userAlreadyRegister(request.getEmail())) {
                     tokenModel.setToken(tokenRegister);
                     tokenModel.setEmail(request.getEmail());
                     tokenService.addToken(tokenModel);
