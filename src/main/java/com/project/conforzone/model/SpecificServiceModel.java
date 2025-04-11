@@ -22,7 +22,9 @@ public class SpecificServiceModel {
 
     @Column(nullable = false)
     private String name;
+    @Column(length = 9999)
     private String description;
+    private String slug;
 
     //@Convert(converter = MoneyConverter.class)
     @Column(nullable = false, columnDefinition = "NUMERIC(10,2)")

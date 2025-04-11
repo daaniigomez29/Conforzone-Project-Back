@@ -18,6 +18,7 @@ public class SpecificServiceModelDto {
     private Integer id;
     private String name;
     private String description;
+    private String slug;
     //@Convert(converter = MoneyConverter.class)
     private Double firstPrice; //Precio real a comprar
     //@Convert(converter = MoneyConverter.class)

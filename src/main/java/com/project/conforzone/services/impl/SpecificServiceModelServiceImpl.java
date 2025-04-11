@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,8 +37,23 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
     }
 
     @Override
+    public List<SpecificServiceModelDto> getSpecificServicesBySlug(String slug) {
+        return Optional.of(specificServiceRepository.getSpecificServicesBySlug(slug))
+                .filter(list -> !list.isEmpty())
+                .orElseThrow(() -> new GlobalException("No se encontraron servicios"))
+                .stream()
+                .map(modelMapper::toSpecificModelDto)
+                .toList();
+    }
+
+    @Override
     public SpecificServiceModelDto getSpecificServiceById(Integer id) {
         return specificServiceRepository.findById(id).map(modelMapper::toSpecificModelDto).orElseThrow(() -> new GlobalException("El servicio específico no existe"));
+    }
+
+    @Override
+    public SpecificServiceModelDto getSpecificServiceBySlugAndId(String slug, Integer id) {
+        return specificServiceRepository.getSpecificServiceBySlugAndId(slug, id).map(modelMapper::toSpecificModelDto).orElseThrow(() -> new GlobalException("El servicio específico no existe o su etiqueta no coincide"));
     }
 
     @Override

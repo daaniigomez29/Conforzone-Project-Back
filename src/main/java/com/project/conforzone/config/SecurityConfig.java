@@ -32,9 +32,22 @@ public class SecurityConfig {
                         authRequest
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers("/api/v1/users/existsEmail/**").permitAll()
+
                                 .requestMatchers("/api/v1/specific_services/add").hasRole("ADMIN")
-                                .requestMatchers("/api/v1/specific_services/edit/{Id}").hasRole("ADMIN")
-                                .requestMatchers("/api/v1/**").authenticated()
+                                .requestMatchers("/api/v1/specific_services/edit/{id}").hasRole("ADMIN")
+
+                                .requestMatchers("/api/v1/services_am").hasRole("ADMIN")
+                                .requestMatchers("/api/v1/services_am/add").hasRole("ADMIN")
+
+                                .requestMatchers("/api/v1/services/edit").hasRole("ADMIN")
+                                .requestMatchers("/api/v1/services/add").hasRole("ADMIN")
+
+                                .requestMatchers("/api/v1/users/edit/{id}").authenticated()
+
+                                .requestMatchers("/api/v1/purchases").authenticated()
+                                .requestMatchers("/api/v1/purchases/**").authenticated()
+
+                                .requestMatchers("/api/v1/**").permitAll()
                                 )
                 .sessionManagement(sessionManager ->
                         sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

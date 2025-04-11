@@ -19,6 +19,8 @@ public class ApiEndpoints {
 
     //SpecificService
     public static final String BASE_SPECIFIC_SERVICE = "/specific_services";
+    public static final String SPECIFIC_SERVICE_SLASH_SLUG = "/slug";
+    public static final String SPECIFIC_SERVICE_SLUG = "/{slug}";
     public static final String SPECIFIC_SERVICE_OFFER = "/offers";
 
     //Service

@@ -28,9 +28,21 @@ public class SpecificServiceControllerImpl implements SpecificServiceController 
     }
 
     @Override
+    @GetMapping(ApiEndpoints.SPECIFIC_SERVICE_SLASH_SLUG + ApiEndpoints.SPECIFIC_SERVICE_SLUG)
+    public ResponseEntity<List<SpecificServiceModelDto>> getSpecificServicesBySlug(@PathVariable String slug) {
+        return ResponseEntity.ok(specificServiceModelService.getSpecificServicesBySlug(slug));
+    }
+
+    @Override
     @GetMapping(ApiEndpoints.BASE_ID)
     public ResponseEntity<SpecificServiceModelDto> getSpecificServiceById(@PathVariable Integer id) {
         return ResponseEntity.ok(specificServiceModelService.getSpecificServiceById(id));
+    }
+
+    @Override
+    @GetMapping(ApiEndpoints.SPECIFIC_SERVICE_SLUG + ApiEndpoints.BASE_ID)
+    public ResponseEntity<SpecificServiceModelDto> getSpecificServiceBySlugAndId(@PathVariable String slug, @PathVariable Integer id) {
+        return ResponseEntity.ok(specificServiceModelService.getSpecificServiceBySlugAndId(slug, id));
     }
 
     @Override
