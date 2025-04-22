@@ -31,15 +31,15 @@ public class SpecificServiceModel {
     private Double firstPrice;
 
     //@Convert(converter = MoneyConverter.class)
-    @Column(nullable = false, columnDefinition = "NUMERIC(10,2)")
+    @Column(columnDefinition = "NUMERIC(10,2)")
     private Double secondPrice;
 
     //@Convert(converter = MoneyConverter.class)
-    @Column(nullable = false, columnDefinition = "NUMERIC(10,2)")
+    @Column(columnDefinition = "NUMERIC(10,2)")
     private Double bookingPrice;
 
     //@Convert(converter = MoneyConverter.class)
-    @Column(nullable = false, columnDefinition = "NUMERIC(10,2)")
+    @Column(columnDefinition = "NUMERIC(10,2)")
     private Double pricePerMeter;
 
     private String image;

@@ -21,14 +21,7 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
     private final Mapper modelMapper;
     @Override
     public List<SpecificServiceModelDto> getAllSpecificServices() {
-        return specificServiceRepository.findAll().stream().map(modelMapper::toSpecificModelDto)
-                .peek(specificServiceModelDto -> {
-                    specificServiceModelDto.setFirstPrice(specificServiceModelDto.getFirstPrice() * 100);
-                    specificServiceModelDto.setSecondPrice(specificServiceModelDto.getSecondPrice() * 100);
-                    specificServiceModelDto.setBookingPrice(specificServiceModelDto.getBookingPrice() * 100);
-                    specificServiceModelDto.setPricePerMeter(specificServiceModelDto.getPricePerMeter() * 100);
-                })
-                .toList();
+        return specificServiceRepository.findAll().stream().map(modelMapper::toSpecificModelDto).toList();
     }
 
     @Override
@@ -42,6 +35,7 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
                 .filter(list -> !list.isEmpty())
                 .orElseThrow(() -> new GlobalException("No se encontraron servicios"))
                 .stream()
+                .filter(specificServiceModel -> !specificServiceModel.isOffer())
                 .map(modelMapper::toSpecificModelDto)
                 .toList();
     }
@@ -53,7 +47,7 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
 
     @Override
     public SpecificServiceModelDto getSpecificServiceBySlugAndId(String slug, Integer id) {
-        return specificServiceRepository.getSpecificServiceBySlugAndId(slug, id).map(modelMapper::toSpecificModelDto).orElseThrow(() -> new GlobalException("El servicio específico no existe o su etiqueta no coincide"));
+        return specificServiceRepository.getSpecificServiceBySlugAndId(slug, id).filter(specificServiceModel -> !specificServiceModel.isOffer()).map(modelMapper::toSpecificModelDto).orElseThrow(() -> new GlobalException("El servicio específico no existe o su etiqueta no coincide"));
     }
 
     @Override
@@ -63,6 +57,8 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
             specificServiceModelDto.setSecondPrice(specificServiceModelDto.getSecondPrice());
             specificServiceModelDto.setBookingPrice(specificServiceModelDto.getBookingPrice());
             specificServiceModelDto.setPricePerMeter(specificServiceModelDto.getPricePerMeter());
+            specificServiceModelDto.setOffer(specificServiceModelDto.isOffer());
+            specificServiceModelDto.setSlug(specificServiceModelDto.getSlug());
             return modelMapper.toSpecificModelDto(specificServiceRepository.save(modelMapper.toSpecificModel(specificServiceModelDto)));
         } else {
             throw new GlobalException("El servicio específico ya existe");
@@ -81,6 +77,7 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
             editedSpecificModel.setAvailable(specificServiceModelDto.isAvailable());
             editedSpecificModel.setPricePerMeter(specificServiceModelDto.getPricePerMeter());
             editedSpecificModel.setOffer(specificServiceModelDto.isOffer());
+            specificServiceModelDto.setSlug(specificServiceModelDto.getSlug());
             return modelMapper.toSpecificModelDto(specificServiceRepository.save(editedSpecificModel));
         } else {
             throw new GlobalException("El servicio específico no existe o su id es erróneo");
