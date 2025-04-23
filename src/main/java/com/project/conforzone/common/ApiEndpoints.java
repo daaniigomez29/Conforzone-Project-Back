@@ -8,10 +8,14 @@ public class ApiEndpoints {
     public static final String BASE_EDIT = "/edit";
 
     //Autentication
-    public static final String BASE_AUTH= "/auth";
+    public static final String BASE_AUTH = "/auth";
     public static final String LOGIN_API = "/login";
     public static final String REGISTER_API = "/register";
     public static final String CONFIRM_REGISTER_API = "confirm-register/{token}";
+
+    //Email
+    public static final String BASE_EMAIL = "/email";
+    public static final String CONTACT_EMAIL = "/contact";
 
     //User
     public static final String BASE_USER = "/users";

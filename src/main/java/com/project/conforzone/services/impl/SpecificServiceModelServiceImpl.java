@@ -9,6 +9,7 @@ import com.project.conforzone.util.Mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -36,6 +37,7 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
                 .orElseThrow(() -> new GlobalException("No se encontraron servicios"))
                 .stream()
                 .filter(specificServiceModel -> !specificServiceModel.isOffer())
+                .sorted(Comparator.comparing(SpecificServiceModel::getFirstPrice))
                 .map(modelMapper::toSpecificModelDto)
                 .toList();
     }
