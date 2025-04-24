@@ -27,7 +27,10 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
 
     @Override
     public List<SpecificServiceModelDto> getAllOfferSpecificServices() {
-        return specificServiceRepository.findByOfferTrue().stream().map(modelMapper::toSpecificModelDto).toList();
+        return specificServiceRepository.findByOfferTrue().
+                stream()
+                .sorted(Comparator.comparing(SpecificServiceModel::getFirstPrice))
+                .map(modelMapper::toSpecificModelDto).toList();
     }
 
     @Override
@@ -45,6 +48,17 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
     @Override
     public SpecificServiceModelDto getSpecificServiceById(Integer id) {
         return specificServiceRepository.findById(id).map(modelMapper::toSpecificModelDto).orElseThrow(() -> new GlobalException("El servicio específico no existe"));
+    }
+
+    @Override
+    public SpecificServiceModelDto getOfferSpecificServiceById(Integer id) {
+        return Optional.of(specificServiceRepository.findById(id))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .filter(SpecificServiceModel::isOffer)
+                .map(modelMapper::toSpecificModelDto)
+                .orElseThrow(() -> new GlobalException("La oferta no se encuentra disponible"));
+
     }
 
     @Override

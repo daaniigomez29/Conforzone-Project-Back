@@ -12,6 +12,7 @@ public interface SpecificServiceController {
     public ResponseEntity<List<SpecificServiceModelDto>> getAllOfferSpecificServices();
     public ResponseEntity<List<SpecificServiceModelDto>> getSpecificServicesBySlug(String slug);
     public ResponseEntity<SpecificServiceModelDto> getSpecificServiceById(Integer id);
+    public ResponseEntity<SpecificServiceModelDto> getOfferSpecificServiceById(Integer id);
     public ResponseEntity<SpecificServiceModelDto> getSpecificServiceBySlugAndId(String slug, Integer id);
     public ResponseEntity<SpecificServiceModelDto> addSpecificService(SpecificServiceModelDto specificServiceModelDto);
     public ResponseEntity<SpecificServiceModelDto> editSpecificService(SpecificServiceModelDto specificServiceModelDto, Integer idPath);
