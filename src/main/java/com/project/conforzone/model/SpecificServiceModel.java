@@ -43,6 +43,7 @@ public class SpecificServiceModel {
     private Double pricePerMeter;
 
     private String image;
+    @Column(nullable = false, columnDefinition = "boolean default true")
     private boolean available;
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean offer;
