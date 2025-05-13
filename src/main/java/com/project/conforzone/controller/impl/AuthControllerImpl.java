@@ -17,18 +17,18 @@ public class AuthControllerImpl implements AuthController {
     @Override
     @PostMapping(ApiEndpoints.REGISTER_API)
     public ResponseEntity<TokenModelDto> register(@RequestBody RegisterRequest registerRequest) throws MessagingException {
-        return ResponseEntity.ok(authService.register(registerRequest));
+        return null;
     }
 
     @Override
     @GetMapping(ApiEndpoints.CONFIRM_REGISTER_API)
     public String confirmRegister(@PathVariable String token) throws MessagingException {
-        return authService.confirmRegister(token);
+        return null;
     }
 
     @Override
     @PostMapping(ApiEndpoints.LOGIN_API)
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
-        return ResponseEntity.ok(authService.login(loginRequest));
+        return null;
     }
 }
