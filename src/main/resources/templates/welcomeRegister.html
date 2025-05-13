@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a Conforzone Eficiencias</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #007bff;
+            color: #ffffff;
+            border-radius: 8px 8px 0 0;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            margin-top: 20px;
+            color: #333;
+        }
+        .content p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #28a745;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #777;
+        }
+        .social-icons a {
+            margin: 0 10px;
+            color: #555;
+            text-decoration: none;
+            font-size: 20px;
+        }
+        .contact {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Bienvenido a Conforzone Eficiencias</h1>
+    </div>
+    <div class="content">
+        <p>Hola <strong th:text="${userName}"> [Nombre del Cliente]</strong>,</p>
+        <p>¡Gracias por registrarte en Conforzone Eficiencias! Estamos muy emocionados de que te unas a nosotros. Para completar tu registro, por favor haz clic en el siguiente enlace para confirmar tu cuenta:</p>
+
+        <a th:href="@{${urlConfirmation}}" class="btn" >Confirmar mi cuenta</a>
+
+        <p>Si tienes alguna duda o necesitas ayuda, no dudes en ponerte en contacto con nosotros.</p>
+    </div>
+    <div class="footer">
+        <div class="contact">
+            <p>📞 Teléfono: +34 123 456 789</p>
+            <p>📧 Email: contacto@conforzone.com</p>
+        </div>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/Conforzone" target="_blank">Facebook</a> |
+            <a href="https://twitter.com/Conforzone" target="_blank">Twitter</a> |
+            <a href="https://www.instagram.com/Conforzone" target="_blank">Instagram</a>
+        </div>
+        <p>© 2025 Conforzone Eficiencias. Todos los derechos reservados.</p>
+    </div>
+</div>
+</body>
+</html>
