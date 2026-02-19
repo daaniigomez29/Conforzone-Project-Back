@@ -13,6 +13,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,12 +37,23 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
 
     @Override
     public List<SpecificServiceModelDto> getSpecificServicesBySlug(String slug) {
+        Pattern numberPattern = Pattern.compile("de hasta ([0-9.]+)");
+
         return Optional.of(specificServiceRepository.getSpecificServicesBySlug(slug))
                 .filter(list -> !list.isEmpty())
                 .orElseThrow(() -> new GlobalException("No se encontraron servicios"))
                 .stream()
                 .filter(specificServiceModel -> !specificServiceModel.isOffer())
-                .sorted(Comparator.comparing(SpecificServiceModel::getName))
+                .sorted(Comparator.comparingDouble((SpecificServiceModel s) -> {
+                    if (s.getName() == null) return Double.MIN_VALUE;
+                    Matcher m = numberPattern.matcher(s.getName());
+                    if (m.find()) {
+                        // convierte "12.000" -> 12000
+                        return Double.parseDouble(m.group(1).replace(".", ""));
+                    } else {
+                        return Double.MIN_VALUE; // si no hay número, lo ponemos al final
+                    }
+                })) // de mayor a menor
                 .map(modelMapper::toSpecificModelDto)
                 .toList();
     }
