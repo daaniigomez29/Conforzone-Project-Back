@@ -29,7 +29,7 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
     public List<SpecificServiceModelDto> getAllOfferSpecificServices() {
         return specificServiceRepository.findByOfferTrue().
                 stream()
-                .sorted(Comparator.comparing(SpecificServiceModel::getFirstPrice))
+                //.sorted(Comparator.comparing(SpecificServiceModel::getFirstPrice))
                 .map(modelMapper::toSpecificModelDto).toList();
     }
 
@@ -40,7 +40,7 @@ public class SpecificServiceModelServiceImpl implements SpecificServiceModelServ
                 .orElseThrow(() -> new GlobalException("No se encontraron servicios"))
                 .stream()
                 .filter(specificServiceModel -> !specificServiceModel.isOffer())
-                .sorted(Comparator.comparing(SpecificServiceModel::getFirstPrice))
+                .sorted(Comparator.comparing(SpecificServiceModel::getName))
                 .map(modelMapper::toSpecificModelDto)
                 .toList();
     }
