@@ -27,7 +27,7 @@ public class SpecificServiceModel {
     private String slug;
 
     //@Convert(converter = MoneyConverter.class)
-    @Column(nullable = false, columnDefinition = "NUMERIC(10,2)")
+    @Column(nullable = true, columnDefinition = "NUMERIC(10,2)")
     private Double firstPrice;
 
     //@Convert(converter = MoneyConverter.class)
@@ -45,7 +45,7 @@ public class SpecificServiceModel {
     private String image;
     @Column(nullable = false, columnDefinition = "boolean default true")
     private boolean available;
-    @Column(nullable = false, columnDefinition = "boolean default false")
+    @Column(nullable = true, columnDefinition = "boolean default false")
     private boolean offer;
 
     @OneToMany(mappedBy = "specificService", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
